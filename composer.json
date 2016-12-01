@@ -1,0 +1,20 @@
+{
+  "name": "tjlytle/advent2016",
+  "description": "Solutions for Advent of Code 2016",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Tim Lytle",
+      "email": "tim@nexmo.com"
+    }
+  ],
+  "require": {
+    "phpunit/phpunit": "5.6.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Advent2016\\": "src/"
+    }
+  }
+}
