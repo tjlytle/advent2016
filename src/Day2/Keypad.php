@@ -3,11 +3,7 @@ namespace Advent2016\Day2;
 
 class Keypad
 {
-    protected $keypad = [
-        ['1', '2', '3'],
-        ['4', '5', '6'],
-        ['7', '8', '9'],
-    ];
+    protected $keypad = [];
 
     /**
      * @var array
@@ -22,13 +18,21 @@ class Keypad
         }
     }
 
-    public function getCode()
+    public function setKeys(array $keys)
     {
-        $pos = [1,1];
+        $this->keypad = $keys;
+    }
+
+    public function getCode($starting)
+    {
+        $pos = $this->getPosForKey($starting);
         $code = '';
 
         foreach($this->directions as $line){
             foreach(str_split($line) as $move){
+
+                $last = $pos;
+
                 switch(strtolower($move)){
                     case 'u':
                         $pos[0]--;
@@ -44,14 +48,8 @@ class Keypad
                         break;
                 }
 
-                foreach($pos as $index => $value){
-                    if($value > 2){
-                        $pos[$index] = 2;
-                    }
-
-                    if($value < 0){
-                        $pos[$index] = 0;
-                    }
+                if(!isset($this->keypad[$pos[0]][$pos[1]]) OR is_null($this->keypad[$pos[0]][$pos[1]])){
+                    $pos = $last;
                 }
             }
 
@@ -60,4 +58,18 @@ class Keypad
 
         return $code;
     }
+
+    protected function getPosForKey($search)
+    {
+        foreach($this->keypad as $r => $row){
+            foreach($row as $c => $key){
+                if($search == $key){
+                    return [$r, $c];
+                }
+            }
+        }
+
+        throw new \Exception('could not find key: ' . $search);
+    }
+
 }
